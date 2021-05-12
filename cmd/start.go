@@ -66,6 +66,7 @@ func getProxyUrl(args []string, proxyConditionRaw string) string {
 		}
 	}
 
+	// TODO: Make this dynamic by taking --default flag input
 	return "http://localhost:1333"
 }
 
