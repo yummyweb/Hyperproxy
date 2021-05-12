@@ -2,6 +2,6 @@
 
 Hyperproxy is a simple and reliable reverse proxy for experts.
 
-### Usage
+## Usage
 
 Use the `hyperproxy` command to get started.
