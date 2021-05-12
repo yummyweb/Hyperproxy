@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
+	"github.com/yummyweb/Hyperproxy/cmd"
 )
 
 // Get env var or use default value
@@ -124,6 +125,8 @@ func handleRequestAndRedirect(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	cmd.Execute()
+	
 	// Log setup values
 	logSetup()
 
