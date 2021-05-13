@@ -9,7 +9,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"strconv"
-	"strings"
 
 	"github.com/yummyweb/Hyperproxy/utils"
 
@@ -50,24 +49,6 @@ type requestPayloadStruct struct {
 // Log the typeform payload and redirect url
 func logRequestPayload(requestionPayload requestPayloadStruct, proxyUrl string) {
 	log.Printf("proxy_condition: %s, proxy_url: %s\n", requestionPayload.ProxyCondition, proxyUrl)
-}
-
-// Get the url for a given proxy condition
-func getProxyUrl(args []string, proxyConditionRaw string) string {
-	proxyCondition := strings.ToUpper(proxyConditionRaw)
-
-	// url_a := GetEnv("URL_A", "http://localhost:1331")
-	// url_b := GetEnv("URL_B", "http://localhost:1332")
-	// default_url := GetEnv("DEFAULT_URL", "http://localhost:1333")
-
-	for i := 0; i < len(args); i++ {
-		if proxyCondition == strconv.Itoa(i) {
-			return args[i]
-		}
-	}
-
-	// TODO: Make this dynamic by taking --default flag input
-	return "http://localhost:1333"
 }
 
 // Serve a reverse proxy for a given url
@@ -119,7 +100,7 @@ func parseRequestBody(request *http.Request) requestPayloadStruct {
 // Redirect a request to the appropriate url
 func handleRequestAndRedirect(args []string, res http.ResponseWriter, req *http.Request) {
 	requestPayload := parseRequestBody(req)
-	url := getProxyUrl(args, requestPayload.ProxyCondition)
+	url := utils.GetProxyUrl(args, requestPayload.ProxyCondition)
 	logRequestPayload(requestPayload, url)
 
 	serveReverseProxy(url, res, req)
